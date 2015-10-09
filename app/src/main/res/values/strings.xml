@@ -1,6 +1,38 @@
 <resources>
     <string name="app_name">GoTo</string>
-    <string name="action_settings">Settings</string>
-    <string name="enterPersonalInfo">Please enter personal info: </string>
+    <string name="action_settings">GoTo</string>
+    <string name="enterPersonalInfo"> Please enter personal information</string>
+    <string name="name">Name</string>
+    <string name="lastName">Surame</string>
     <string name="address">Address</string>
+    <string name="title_activity_bus_station">Bus Station</string>
+    <string name="chooseStation">GO TO ... </string>
+    
+    <string-array name="stations">
+        <item>Vjecnica</item>
+        <item>Bascarsija				</item>
+        <item>Katedrala				</item>
+        <item>Narodna Banka				</item>
+        <item>Predsjednistvo				</item>
+        <item>Marijin Dvor				</item>
+        <item>Tehnicka Skola				</item>
+        <item>Univerzitet-Kasarna				</item>
+        <item>Pofalici				</item>
+        <item>Socijalno				</item>
+        <item>Dolac Malta				</item>
+        <item>Vjetrenjaca				</item>
+        <item>Otoka				</item>
+        <item>Gras				</item>
+        <item>RTV BiH				</item>
+        <item>Alipasin Most				</item>
+        <item>Nedzarici				</item>
+        <item>Vojnicko Polje				</item>
+        <item>  Mojmilo				</item>
+        <item>Dobrinja V				</item>
+        <item>Dobrinja III				</item>
+        <item>Dobrinja II				</item>
+        <item>Dobrinja okretaljka				</item>
+        <item>Stup				</item>
+        <item>Ilidza              </item>
+    </string-array>
 </resources>
