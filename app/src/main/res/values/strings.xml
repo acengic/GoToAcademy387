@@ -35,4 +35,7 @@
         <item>Stup				</item>
         <item>Ilidza              </item>
     </string-array>
+    <string name="title_activity_list">list</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
