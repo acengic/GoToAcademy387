@@ -1,0 +1,1 @@
+alter table Person add ZIP TEXT;
