@@ -10,10 +10,10 @@
     
     <string-array name="stations">
         <item>Vjecnica</item>
-        <item>Bascarsija				</item>
-        <item>Katedrala				</item>
-        <item>Narodna Banka				</item>
-        <item>Predsjednistvo				</item>
+        <item>Bascarsija	</item>
+        <item>Katedrala		</item>
+        <item>Narodna Banka	</item>
+        <item>Predsjednistvo</item>
         <item>Marijin Dvor				</item>
         <item>Tehnicka Skola				</item>
         <item>Univerzitet-Kasarna				</item>
@@ -38,4 +38,5 @@
     <string name="title_activity_list">list</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_list_destinations">listDestinations</string>
 </resources>
