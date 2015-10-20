@@ -22,6 +22,5 @@ public class Person extends SugarRecord<Person> {
         this.city = city;
         this.country = country;
         this.ZIP = ZIP;
-
     }
 }

@@ -7,6 +7,10 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class list extends AppCompatActivity {
@@ -21,15 +25,56 @@ public class list extends AppCompatActivity {
 
 
         ArrayList<ApplicationInfo> appInfoList = new ArrayList<>();
-
-        appInfoList.add(new ApplicationInfo("Viber", "Get New Viber App", "Japan", R.drawable.viber));
-        appInfoList.add(new ApplicationInfo("Facebook", "FB Viber App", "California", R.drawable.facebook));
-        appInfoList.add(new ApplicationInfo("Klix", "Most popular BH App", "BH", R.drawable.klix));
+        PopulateApplicationInfoList(appInfoList);
 
         ApplicationInfoAdapter appInfoAdapter = new ApplicationInfoAdapter(appInfoList, getBaseContext());
 
         ListView lw = (ListView) findViewById(R.id.listView);
         lw.setAdapter(appInfoAdapter);
+    }
+
+
+    void PopulateApplicationInfoList(ArrayList<ApplicationInfo> appInfoList){
+
+
+//     jsonObject =
+//        {"Publisher": "Viber",
+//            "Post":"Get New Viber App",
+//            "Location":"Japan",
+//            "imageFileNameId": 0 }";
+        String jsonString = loadJSONFromAsset("AppInfo.json");
+        try {
+            JSONArray jsonArray = new JSONArray(jsonString);
+            int size = jsonArray.length();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            return;
+        }
+//        <Publisher> Viber </Publisher>
+//        <Post> Get New Viber App </Post>
+//        <Location> Japan </Location>
+//        <imageFileNameId> R.drawable.viber </imageFileNameId>
+
+        appInfoList.add(new ApplicationInfo("Viber", "Get New Viber App", "Japan", R.drawable.viber));
+        appInfoList.add(new ApplicationInfo("Facebook", "FB  App", "California", R.drawable.facebook));
+        appInfoList.add(new ApplicationInfo("Klix", "Most popular BH App", "BH", R.drawable.klix));
+    }
+
+    public String loadJSONFromAsset(String fileName) {
+        String json = null;
+        try {
+            InputStream is = this.getAssets().open(fileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 
     @Override

@@ -80,12 +80,13 @@ public class BusStation extends AppCompatActivity {
     }
 
     public void Go(View v){
-        Bundle b = new Bundle();
-        b.putLong("dbID", 1);
-        b.putCharSequence(Constants.test,"JOHN");
-        Intent i = new Intent(this, MainActivity.class);
-        i.putExtras(b);
-        startActivity(i);
+        startActivity(new Intent(this, listDestinations.class));
+//        Bundle b = new Bundle();
+//        b.putLong("dbID", 1);
+//        b.putCharSequence(Constants.test,"JOHN");
+//        Intent i = new Intent(this, MainActivity.class);
+//        i.putExtras(b);
+//        startActivity(i);
     }
 
     @Override
