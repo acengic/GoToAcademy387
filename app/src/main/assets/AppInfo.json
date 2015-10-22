@@ -1,23 +1,20 @@
-[
-  {
-    "Publisher": "Viber",
-    "Post":"Get New Viber App",
-    "Location":"Japan",
-    "imageFileNameId": 0
-  },
-
-  {
-    "Publisher": "Facebook",
-    "Post":"Get New FB App",
-    "Location":"California",
-    "imageFileNameId": 0
-  },
-
-  {
-    "Publisher": "KLIX",
-    "Post":"Most popular BH App",
-    "Location":"BH",
-    "imageFileNameId": 0
-  }
-
-]
+[{
+"Publisher": "Viber",
+"Post": "Get New Viber App",
+"Location": "Japan",
+"imageFileNameId": 2130837566
+}
+,
+{
+"Publisher": "Facebook",
+"Post": "Get New FB App",
+"Location": "California",
+"imageFileNameId": 2130837563
+}
+,
+{
+"Publisher": "KLIX",
+"Post": "Most popular BH App",
+"Location": "BH",
+"imageFileNameId": 2130837565
+}]
