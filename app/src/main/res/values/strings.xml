@@ -39,4 +39,5 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_list_destinations">listDestinations</string>
+    <string name="title_activity_arrival_list">ArrivalListActivity</string>
 </resources>

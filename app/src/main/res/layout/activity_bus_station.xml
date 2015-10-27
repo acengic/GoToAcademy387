@@ -42,11 +42,4 @@
         android:layout_height="0dp"
         android:textColor="#faeaff"
         android:textSize="40dp" />
-    <Button
-        android:id="@+id/showList"
-        android:layout_weight="2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="Show List"
-        android:onClick="ShowListView"/>
 </LinearLayout>
