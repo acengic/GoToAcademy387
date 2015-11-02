@@ -6,8 +6,8 @@ public class Destination extends SugarRecord<Destination> {
         private String name;
         private String address;
         private int numberOfVisits;
-        private long geoLongitude;
-        private long geoLatitude;
+        private double geoLongitude;
+        private double geoLatitude;
 
         //This is a missing part that caused Errors in todays class (Monday 19 October)
         // Class HAS TO HAVE Empty constructor to work as Sugar record
@@ -19,7 +19,13 @@ public class Destination extends SugarRecord<Destination> {
             this.address = address;
         }
 
-        public String getName() {
+    public Destination(String name, String address, int visits) {
+        this.name = name;
+        this.address = address;
+        this.numberOfVisits = visits;
+    }
+
+    public String getName() {
             return name;
         }
 
@@ -43,7 +49,7 @@ public class Destination extends SugarRecord<Destination> {
             this.numberOfVisits = numberOfVisits;
         }
 
-        public long getGeoLongitude() {
+        public double getGeoLongitude() {
             return geoLongitude;
         }
 
@@ -51,7 +57,7 @@ public class Destination extends SugarRecord<Destination> {
             this.geoLongitude = geoLongitude;
         }
 
-        public long getGeoLatitude() {
+        public double getGeoLatitude() {
             return geoLatitude;
         }
 
