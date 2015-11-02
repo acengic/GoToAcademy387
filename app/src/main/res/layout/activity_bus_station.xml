@@ -7,10 +7,13 @@
     android:orientation="vertical"
     tools:context="ba.tba.class1.BusStation">
 
-    <TextView android:text="@string/chooseStation"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
+    <Button
+        android:layout_weight="2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="TAKE PHOTO"
+        android:id="@+id/button2"
+        android:onClick="TakePhoto"/>
 
     <Spinner
         android:id="@+id/fromStation"
