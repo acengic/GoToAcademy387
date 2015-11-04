@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     public void Save(View v)
     {
         EditText et = (EditText) findViewById(R.id.name);
-        Toast.makeText(getBaseContext(), "Saving Perosnal Info for " + et.getText().toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "Saving Personal Info for " + et.getText().toString(),Toast.LENGTH_SHORT).show();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

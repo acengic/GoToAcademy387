@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,6 +47,15 @@ public class list extends AppCompatActivity {
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
             int size = jsonArray.length();
+            for(int i=0; i < size; i++){
+                JSONObject jo = jsonArray.getJSONObject(i);
+
+                appInfoList.add(new ApplicationInfo(
+                        jo.getString("Publisher"),
+                        jo.getString("Post"),
+                        jo.getString("Location"),
+                        jo.getInt("imageFileNameId")));
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -56,9 +66,9 @@ public class list extends AppCompatActivity {
 //        <Location> Japan </Location>
 //        <imageFileNameId> R.drawable.viber </imageFileNameId>
 
-        appInfoList.add(new ApplicationInfo("Viber", "Get New Viber App", "Japan", R.drawable.viber));
-        appInfoList.add(new ApplicationInfo("Facebook", "FB  App", "California", R.drawable.facebook));
-        appInfoList.add(new ApplicationInfo("Klix", "Most popular BH App", "BH", R.drawable.klix));
+//        appInfoList.add(new ApplicationInfo("Viber", "Get New Viber App", "Japan", R.drawable.viber));
+//        appInfoList.add(new ApplicationInfo("Facebook", "FB  App", "California", R.drawable.facebook));
+//        appInfoList.add(new ApplicationInfo("Klix", "Most popular BH App", "BH", R.drawable.klix));
     }
 
     public String loadJSONFromAsset(String fileName) {
