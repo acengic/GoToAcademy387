@@ -57,12 +57,12 @@ public class ArrivalAdapter extends BaseAdapter {
         Arrival a = arrivals.get(position);
 
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "Oxygen.otf");
-        minutesToArrival.setText(Integer.toString(a.minutesToArrival));
+        minutesToArrival.setText(Integer.toString(a.eta));
         arrivalTime.setText(a.arrivalTime);
         minutesToArrival.setTypeface(tf);
         arrivalTime.setTypeface(tf);
 
-        operator.setText(a.operator);
+        operator.setText(a.operatorName);
         operator.setTypeface(Typeface.createFromAsset(context.getAssets(), "NewsCycle-Regular.ttf"));
         //operator.setTextSize(30);
         return convertView;
