@@ -7,20 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import org.w3c.dom.Text;
-import java.util.ArrayList;
+
+import java.util.List;
 
 /**
  * Created by jackblack on 10/26/15.
  */
 public class ArrivalAdapter extends BaseAdapter {
 
-    ArrayList<Arrival> arrivals = null;
+    List<Arrival> arrivals = null;
     Context context = null;
 
-    ArrivalAdapter(ArrayList<Arrival> arrivals, Context context){
+    ArrivalAdapter(List<Arrival> arrivals, Context context){
         this.arrivals =  arrivals;
         this.context = context;
     }
@@ -57,12 +56,12 @@ public class ArrivalAdapter extends BaseAdapter {
         Arrival a = arrivals.get(position);
 
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "Oxygen.otf");
-        minutesToArrival.setText(Integer.toString(a.eta));
-        arrivalTime.setText(a.arrivalTime);
+        minutesToArrival.setText(Integer.toString(a.getEta().intValue()));
+        arrivalTime.setText(a.getArrival());
         minutesToArrival.setTypeface(tf);
         arrivalTime.setTypeface(tf);
 
-        operator.setText(a.operatorName);
+        operator.setText(a.getOperatorName());
         operator.setTypeface(Typeface.createFromAsset(context.getAssets(), "NewsCycle-Regular.ttf"));
         //operator.setTextSize(30);
         return convertView;

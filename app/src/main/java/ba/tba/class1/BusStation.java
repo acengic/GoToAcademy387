@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -20,25 +21,22 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+
+
 import java.io.File;
 import java.io.IOException;
-import java.security.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+
 
 import retrofit.Call;
 import retrofit.Callback;
+import retrofit.Retrofit;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
@@ -60,11 +58,7 @@ public class BusStation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_station);
 
-        //Location Manager has Network WiDi provider, GPS provider
-        LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        Location locationPassive = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+
 //        try {
 //            Typeface tf = Typeface.createFromAsset(getAssets(), "Arvo-Bold.ttf");
 //            Button b = (Button) findViewById(R.id.showList);
@@ -83,6 +77,7 @@ public class BusStation extends AppCompatActivity {
         int minutes = calendar.get(Calendar.MINUTE);
         tp.setCurrentHour(hours);
         tp.setCurrentMinute(minutes);
+
 
         // Create DB and Insert records in Person table using Sugar ORM
         //CreatePerson();
@@ -103,13 +98,8 @@ public class BusStation extends AppCompatActivity {
         //s2.setPrompt("To"); //TODO setting initial default value, do it the right way
         s2.setAdapter(adapter);
 
-//        Button btn = (Button) findViewById(R.id.showList);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(BusStation.this, list.class));
-//            }
-//        });
+        PopulateStations();
+
 
     }
 
@@ -133,6 +123,15 @@ public class BusStation extends AppCompatActivity {
             }
         });
     }
+
+    private void GetLastLocation(){
+        //Location Manager has Network WiDi provider, GPS provider
+        LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location locationPassive = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+    }
+
 
     //create Line table using SQLite
     private void CreateLine(){
@@ -160,6 +159,23 @@ public class BusStation extends AppCompatActivity {
 
     public void ShowAlert(View v) {
 
+        AlertDialog alertDialog = new AlertDialog.Builder(BusStation.this).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage("Alert message to be shown");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+
 //        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
 //
 //        // set title
@@ -186,19 +202,22 @@ public class BusStation extends AppCompatActivity {
 //        // create alert dialog
 //        AlertDialog alertDialog = alertDialogBuilder.create();
 //        alertDialog.show();
+    }
 
+
+    public void TakePhoto(String fileName){
         //Make new folder to store Application photos (if it does not exist)
-
-        //final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
+        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
         File newdir = new File(dir);
         if (!newdir.exists()) newdir.mkdirs();
 
         //Create file where Photo from camera will be stored
-        String file = dir+"GoToApp.jpg";
+        String file = dir + fileName;
         File newfile = new File(file);
         try {
             newfile.createNewFile();
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
 
         Uri outputFileUri = Uri.fromFile(newfile);
 
@@ -207,6 +226,7 @@ public class BusStation extends AppCompatActivity {
 
         startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

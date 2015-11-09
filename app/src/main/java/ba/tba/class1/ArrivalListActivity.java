@@ -1,10 +1,14 @@
 package ba.tba.class1;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +19,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit.Call;
@@ -33,6 +45,7 @@ public class ArrivalListActivity extends AppCompatActivity {
 
     ProgressDialog pd;
     String fromStation, toStation, time;
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,38 +56,89 @@ public class ArrivalListActivity extends AppCompatActivity {
         toStation = getIntent().getStringExtra(Constants.end);
         time = getIntent().getStringExtra(Constants.time);
 
-        ArrayList<Arrival> arrivalsList = new ArrayList<>();
+        //ArrayList<Arrival> arrivalsList = new ArrayList<>();
 
-
+        lv = (ListView) findViewById(R.id.arrivalsListView);
         pd = ProgressDialog.show(this, "Loading", "Wait while we get arrivals...");
-        PopulateArrivalsListFromWeb(arrivalsList);
-        PopulateArrivalsList(arrivalsList);
+        PopulateArrivalsListFromWeb();
+        //PopulateArrivalsList(arrivalsList);
 
-
-        ListView lv = (ListView) findViewById(R.id.arrivalsListView);
-        lv.setAdapter(new ArrivalAdapter(arrivalsList, getBaseContext()));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
                 Toast.makeText(getApplicationContext(), "Selected item No:" + position, Toast.LENGTH_LONG);
-                //Arrival entry = (Arrival) parent.getItemAtPosition(position);
-                view.setBackgroundColor(Color.DKGRAY);
+                Arrival entry = (Arrival) parent.getItemAtPosition(position);
+                String[] parts = entry.getArrival().split(":");
+                int hour = 0 , minute = 0;
+                try {
+                    hour = Integer.parseInt(parts[0]);
+                    minute = Integer.parseInt(parts[1]);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                    //Return and Let user know
+                }
+
+                SetAlarm(hour, minute, "GoTo Alarm");
 
             }
         });
     }
 
-    void PopulateArrivalsListFromWeb(ArrayList<Arrival> arrivalsList) {
-        Call<List<Next>> nextCall = WebService.apiService.getNext(fromStation, toStation, "12:15");
+    void SetAlarm(int hour, int minute, String description){
 
-        nextCall.enqueue(new Callback<List<Next>>() {
+        Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
+        i.putExtra(AlarmClock.EXTRA_MESSAGE, description);
+        i.putExtra(AlarmClock.EXTRA_HOUR, hour);
+        i.putExtra(AlarmClock.EXTRA_MINUTES, minute);
+        startActivity(i);
+        return;
+    }
+
+    class LoggingInterceptor implements Interceptor {
+        @Override public com.squareup.okhttp.Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+
+            long t1 = System.nanoTime();
+//            Log.i("OKHTTP",String.format("Sending request % s on % s % n % s",
+//                    request.url(), chain.connection(), request.headers()));
+
+            com.squareup.okhttp.Response response = chain.proceed(request);
+
+            long t2 = System.nanoTime();
+            Log.i("OKHTTP",String.format("Received response for %s in %.1fms%n%s",
+                    response.request().url(), (t2 - t1) / 1e6d, response.body()));
+
+            return response;
+        }
+    }
+    void PopulateArrivalsListFromWeb() {
+
+     //   OkHttpClient client = new OkHttpClient();
+     //   client.interceptors().add(new LoggingInterceptor());
+
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://sleepy-river-8228.herokuapp.com")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        WebService.GoToApiEndpointInterface apiService =
+//                retrofit.create(WebService.GoToApiEndpointInterface.class);
+
+        Call<List<Arrival>> nextCall = WebService.apiService.getNext(fromStation, toStation, "12:15");
+
+        //Call<List<Arrival>> nextCall = WebService.apiService.getNext(fromStation, toStation, "12:15");
+
+        nextCall.enqueue(new Callback<List<Arrival>>() {
             @Override
-            public void onResponse(Response<List<Next>> response, Retrofit retrofit) {
+            public void onResponse(Response<List<Arrival>> response, Retrofit retrofit) {
                 Log.i("Retrofit2", "sucess: " + response.toString());
                 int statusCode = response.code();
-                List<Next> ln = response.body();
+                Log.i("OKHTTP ", response.body().toString());
+                List<Arrival> ln = response.body();
+                lv.setAdapter(new ArrivalAdapter(ln, getBaseContext()));
                 pd.cancel();
                 // Get result Repo from response.body()
             }
@@ -90,11 +154,11 @@ public class ArrivalListActivity extends AppCompatActivity {
 
     void PopulateArrivalsList(ArrayList<Arrival> arrivalsList){
 
-        arrivalsList.add(new Arrival(3, "19:48","Centrotr","31B"));
-        arrivalsList.add(new Arrival(5, "19:50","GRAS","3"));
-        arrivalsList.add(new Arrival(8, "19:53","UBER","Van"));
-        arrivalsList.add(new Arrival(12, "19:54","GRAS","2"));
-        arrivalsList.add(new Arrival(17, "19:59","GRAS","3"));
+//        arrivalsList.add(new Arrival(3, "19:48","Centrotr","31B"));
+//        arrivalsList.add(new Arrival(5, "19:50","GRAS","3"));
+//        arrivalsList.add(new Arrival(8, "19:53","UBER","Van"));
+//        arrivalsList.add(new Arrival(12, "19:54","GRAS","2"));
+//        arrivalsList.add(new Arrival(17, "19:59","GRAS","3"));
     }
 
     @Override
