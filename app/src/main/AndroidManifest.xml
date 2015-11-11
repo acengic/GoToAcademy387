@@ -48,6 +48,69 @@
             android:name=".ArrivalListActivity"
             android:label="@string/title_activity_arrival_list" >
         </activity>
+        <activity
+            android:name=".Settings"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".BusStation"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ba.tba.class1.BusStation" />
+        </activity>
+        <activity
+            android:name=".SettingsPassengerDetails"
+            android:label="@string/title_activity_passenger_details"
+            android:parentActivityName=".Settings"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ba.tba.class1.Settings" />
+        </activity>
+        <activity
+            android:name=".SettingsFavoriteLocations"
+            android:label="@string/title_activity_favorite_locations"
+            android:parentActivityName=".Settings"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ba.tba.class1.Settings" />
+        </activity>
+        <activity
+            android:name=".SettingsApplication"
+            android:label="@string/title_activity_settings_application"
+            android:parentActivityName=".Settings"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ba.tba.class1.Settings" />
+        </activity>
+        <activity
+            android:name=".SettingsApplicationLanguage"
+            android:label="@string/title_activity_settings_application_language"
+            android:parentActivityName=".SettingsApplication"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ba.tba.class1.SettingsApplication" />
+        </activity>
+        <activity
+            android:name=".SettingsApplicationAbout"
+            android:label="@string/title_activity_settings_application_about"
+            android:parentActivityName=".SettingsApplication"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ba.tba.class1.SettingsApplication" />
+        </activity>
+        <activity
+            android:name=".SettingsPersonalDetails"
+            android:label="@string/title_activity_settings_personal_details"
+            android:parentActivityName=".Settings"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ba.tba.class1.SettingsApplication" />
+        </activity>
     </application>
 
 </manifest>
