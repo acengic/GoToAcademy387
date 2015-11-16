@@ -18,18 +18,15 @@ import android.widget.Toast;
 import android.database.DatabaseUtils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class listDestinations extends AppCompatActivity {
-    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_destinations);
-
-        db = openOrCreateDatabase("FavouriteDestinations", MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS Destinations(Name VARCHAR,Address VARCHAR, Visits INTEGER, GeoLongitude REAL, GeoLatitude REAL);");
 
         ListView lv = (ListView) findViewById(R.id.listView2);
 
@@ -55,21 +52,9 @@ public class listDestinations extends AppCompatActivity {
             d.save();
         }
 */
-        Cursor crs = db.rawQuery("SELECT * FROM Destinations", null);
-        Destination dest = new Destination();
-
-        List<String> array = new ArrayList<String>();
-        while(crs.moveToNext())
-        {
-            if (crs.getInt(crs.getColumnIndex("Visits")) >= 3) {
-                dest = new Destination(crs.getString(crs.getColumnIndex("Name")), crs.getString(crs.getColumnIndex("Address")));
-                dest.save();
-            }
-        }
-        List<Destination> ld = Destination.listAll(Destination.class);
+        List<Destination> ld = Destination.find(Destination.class, "number_of_visits >= ?", "2");
         listDestination.addAll(ld);
 
-        crs.close();
     }
 
     public void AddNewDestinaton(View v){
@@ -88,29 +73,14 @@ public class listDestinations extends AppCompatActivity {
 
         System.out.println("Location: " + getLatitudeFromAddress(newAddress) + "; " + getLongitudeFromAddress(newAddress));
 
-        long number = DatabaseUtils.queryNumEntries(db, "Destinations", "Name = ?", new String[] {newLocation});
-        System.out.println("number: " + number);
+        List<Destination> destinations = Destination.findWithQuery(Destination.class, "Select * from Destination where name = ?", newLocation);
 
-        if(number < 1) {
-            ContentValues insertValues = new ContentValues();
-            insertValues.put("Name", newLocation);
-            insertValues.put("Address", newAddress);
-            insertValues.put("Visits", 1);
-            insertValues.put("GeoLongitude", getLongitudeFromAddress(newAddress));
-            insertValues.put("GeoLatitude", getLatitudeFromAddress(newAddress));
-            db.insert("Destinations", null, insertValues);
+        if(destinations.size() < 1) {
+            Destination destination = new Destination(newLocation, newAddress, 1, getLatitudeFromAddress(newAddress), getLongitudeFromAddress(newAddress));
+            destination.save();
         }
         else {
-            Cursor cursor = db.rawQuery("SELECT * FROM Destinations WHERE Name = '" + newLocation + "'", null);
-            Integer numOfVisits;
-            if (cursor.moveToFirst()) { // data?
-                numOfVisits = cursor.getInt(cursor.getColumnIndex("Visits"));
-                System.out.println("Vis: " + numOfVisits);
-                numOfVisits++;
-                String strSQL = "UPDATE Destinations SET Visits = " + numOfVisits + " WHERE Name = '" + newLocation + "'";
-                db.execSQL(strSQL);
-            }
-            cursor.close();
+            Destination.executeQuery("UPDATE Destination SET number_of_visits = number_of_visits + 1 WHERE Name = ?", newLocation);
         }
 
         Toast.makeText(getBaseContext(), "Searching for available vehicles to get you " + newAddress, Toast.LENGTH_SHORT).show();
