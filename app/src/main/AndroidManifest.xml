@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ba.tba.class1" >
+    package="ba.tba.class1">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <!-- <meta-data android:name="DATABASE" android:value="sugar_example.db" /> -->
         <meta-data
@@ -25,34 +25,27 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".BusStation"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_bus_station" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/title_activity_bus_station">
+
         </activity>
         <activity
             android:name=".list"
-            android:label="@string/title_activity_list" >
-        </activity>
+            android:label="@string/title_activity_list"></activity>
         <activity
             android:name=".listDestinations"
-            android:label="@string/title_activity_list_destinations" >
-        </activity>
+            android:label="@string/title_activity_list_destinations"></activity>
         <activity
             android:name=".ArrivalListActivity"
-            android:label="@string/title_activity_arrival_list" >
-        </activity>
+            android:label="@string/title_activity_arrival_list"></activity>
         <activity
             android:name=".Settings"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".BusStation"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ba.tba.class1.BusStation" />
@@ -61,7 +54,7 @@
             android:name=".SettingsPassengerDetails"
             android:label="@string/title_activity_passenger_details"
             android:parentActivityName=".Settings"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ba.tba.class1.Settings" />
@@ -70,7 +63,7 @@
             android:name=".SettingsFavoriteLocations"
             android:label="@string/title_activity_favorite_locations"
             android:parentActivityName=".Settings"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ba.tba.class1.Settings" />
@@ -79,7 +72,7 @@
             android:name=".SettingsApplication"
             android:label="@string/title_activity_settings_application"
             android:parentActivityName=".Settings"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ba.tba.class1.Settings" />
@@ -88,7 +81,7 @@
             android:name=".SettingsApplicationLanguage"
             android:label="@string/title_activity_settings_application_language"
             android:parentActivityName=".SettingsApplication"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ba.tba.class1.SettingsApplication" />
@@ -97,7 +90,7 @@
             android:name=".SettingsApplicationAbout"
             android:label="@string/title_activity_settings_application_about"
             android:parentActivityName=".SettingsApplication"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ba.tba.class1.SettingsApplication" />
@@ -106,10 +99,22 @@
             android:name=".SettingsPersonalDetails"
             android:label="@string/title_activity_settings_personal_details"
             android:parentActivityName=".Settings"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ba.tba.class1.SettingsApplication" />
+        </activity>
+        <activity
+            android:name=".VehicleDetails"
+            android:label="@string/title_activity_vehicle_details"
+            android:parentActivityName=".ArrivalListActivity"
+            android:theme="@style/AppTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

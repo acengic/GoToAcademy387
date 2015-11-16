@@ -71,4 +71,5 @@
     <string name="title_activity_settings_application_language">Language</string>
     <string name="title_activity_settings_application_about">About</string>
     <string name="title_activity_settings_personal_details">Personal details</string>
+    <string name="title_activity_vehicle_details">VehicleDetails</string>
 </resources>
