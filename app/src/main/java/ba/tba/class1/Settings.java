@@ -93,7 +93,7 @@ public class Settings extends AppCompatActivity {
 
     public void OnClickFavoriteLocationsItem()
     {
-        Intent i = new Intent(this, SettingsFavoriteLocations.class);
+        Intent i = new Intent(this, listDestinations.class);
         startActivity(i);
     }
 
