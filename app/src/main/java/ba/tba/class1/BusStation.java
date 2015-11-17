@@ -1,7 +1,11 @@
 package ba.tba.class1;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -16,6 +20,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -75,18 +80,6 @@ public class BusStation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_station);
 
-
-//        try {
-//            Typeface tf = Typeface.createFromAsset(getAssets(), "Arvo-Bold.ttf");
-//            Button b = (Button) findViewById(R.id.showList);
-//            b.setTypeface(tf);
-//            //b.setGravity(Gravity.CENTER);
-//            //b.setGravity(Gravity.CENTER_VERTICAL);
-//
-//        } catch (Exception e) {
-//            Log.d("ApplyFonts", "Could not Apply Font Arvo-Bold.ttf");
-//        }
-
         tp = (TimePicker) findViewById(R.id.timePicker);
         Calendar calendar = Calendar.getInstance();
         //calendar.setTime(new Date());
@@ -96,32 +89,64 @@ public class BusStation extends AppCompatActivity {
         tp.setCurrentMinute(minutes);
 
 
-        // Create DB and Insert records in Person table using Sugar ORM
-        //CreatePerson();
-        //CreateLine();
         s1 = (Spinner) findViewById(R.id.fromStation);
         s2 = (Spinner) findViewById(R.id.toStation);
 
         String[] slist = getResources().getStringArray(R.array.stations);
         StationAdapter adapter = new StationAdapter( slist, getBaseContext());
 
-                //Creating ArrayAdapter from resource string array
-                // ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.stations, android.R.layout.simple_spinner_item);
-                // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                //Using same addapter (same list of stations) for from and to spinner (drop down list)
-                //s1.setPrompt("From"); //TODO setting initial default value, do it the right way
         s1.setAdapter(adapter);
-        //s2.setPrompt("To"); //TODO setting initial default value, do it the right way
         s2.setAdapter(adapter);
 
-        PopulateStations();
+        // Gets list of stations from web service
+        // PopulateStations();
+    }
+
+    public void Go(View v){
+
+        String arrivalTime = tp.getCurrentHour().toString() + ":" + tp.getCurrentMinute().toString();
+        Intent i = new Intent(this, ArrivalListActivity.class);
+        i.putExtra(Constants.start, s1.getSelectedItem().toString());
+        i.putExtra(Constants.end, s2.getSelectedItem().toString());
+        i.putExtra(Constants.time, arrivalTime);
+
+        startActivity(i);
+    }
+
+    public void ShowNotification(View v) {
+
+        String tittle="GoTo Notification";
+        String subject="Bus Late";
+        String body="Line 42 bus will be 5 minutes late in arrival";
+
+//        if (currentapiVersion < android.os.Build.VERSION_CODES.HONEYCOMB) {
+//
+//            notification = new Notification(icon, text, time);
+//            notification.setLatestEventInfo(this, title, text, contentIntent);
+//            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+//            mNM.notify(NOTIFICATION, notification);
+//        } else {
+        NotificationManager nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        PendingIntent pending=PendingIntent.getActivity(getApplicationContext(), 0, new Intent(),0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                this);
+
+        Notification notification = builder.setContentIntent(pending)
+                .setSmallIcon(R.drawable.viber)
+                .setTicker("GoTo Notification")
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true)
+                .setContentTitle("Title")
+                .setContentText("Bus line 47 will be late 5 min ")
+                .build();
+
+        nm.notify(0, notification);
+//        }
 
 
     }
-
-
-
+    
     void PopulateStations(){
 
         Call<List<Station>> call = WebService.apiService.getStationList();
@@ -174,7 +199,7 @@ public class BusStation extends AppCompatActivity {
     }
 
 
-    public void ShowAlert(View v) {
+    public void ShowAlertDialog(View v) {
 
         AlertDialog alertDialog = new AlertDialog.Builder(BusStation.this).create();
         alertDialog.setTitle("Alert");
@@ -193,32 +218,6 @@ public class BusStation extends AppCompatActivity {
                 });
         alertDialog.show();
 
-//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
-//
-//        // set title
-//        alertDialogBuilder.setTitle("Your Title");
-//
-//        // set dialog message
-//        alertDialogBuilder
-//                .setMessage("Click yes to exit!")
-//                .setCancelable(false)
-//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // if this button is clicked, close
-//                        // current activity
-//                        BusStation.this.finish();
-//                    }
-//                })
-//                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // if this button is clicked, just close
-//                        // the dialog box and do nothing
-//                        dialog.cancel();
-//                    }
-//                });
-//        // create alert dialog
-//        AlertDialog alertDialog = alertDialogBuilder.create();
-//        alertDialog.show();
     }
 
 
@@ -257,15 +256,7 @@ public class BusStation extends AppCompatActivity {
         }
     }
 
-    public void Go(View v){
 
-        Intent i = new Intent(this, ArrivalListActivity.class);
-        i.putExtra(Constants.start, s1.getSelectedItem().toString());
-        i.putExtra(Constants.end, s2.getSelectedItem().toString());
-        i.putExtra(Constants.time, "18:23");
-
-        startActivity(i);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
