@@ -281,4 +281,16 @@ public class BusStation extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void findNearestStation (View v) {
+        GetLastLocation();
+        LocationProvider lp = new LocationProvider(v.getContext());
+        Location location = lp.getMyLocation();
+        if (location == null) {
+            Toast.makeText(getBaseContext(), "Can't find your location, please check your GPS and NETWORK settings ", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Log.d("Location", "Latitude " + location.getLatitude() + "; Longitude: " + location.getLongitude());
+        }
+    }
 }

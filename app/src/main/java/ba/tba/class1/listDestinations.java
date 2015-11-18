@@ -71,12 +71,12 @@ public class listDestinations extends AppCompatActivity {
         EditText newLocationEdit =(EditText) findViewById(R.id.location_name_edit);
         String newLocation = newLocationEdit.getText().toString();
 
-        System.out.println("Location: " + getLatitudeFromAddress(newAddress) + "; " + getLongitudeFromAddress(newAddress));
+        System.out.println("Location: " + DistUtils.getLatitudeFromAddress(newAddress, this) + "; " + DistUtils.getLongitudeFromAddress(newAddress, this));
 
         List<Destination> destinations = Destination.findWithQuery(Destination.class, "Select * from Destination where name = ?", newLocation);
 
         if(destinations.size() < 1) {
-            Destination destination = new Destination(newLocation, newAddress, 1, getLatitudeFromAddress(newAddress), getLongitudeFromAddress(newAddress));
+            Destination destination = new Destination(newLocation, newAddress, 1, DistUtils.getLatitudeFromAddress(newAddress, this), DistUtils.getLongitudeFromAddress(newAddress, this));
             destination.save();
         }
         else {
@@ -112,43 +112,5 @@ public class listDestinations extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public double getLatitudeFromAddress(String findAddress) {
-
-        Geocoder coder = new Geocoder(this);
-        List<Address> address;
-
-        try {
-            address = coder.getFromLocationName(findAddress, 5);
-            if (address == null) {
-                return 0;
-            }
-            Address location = address.get(0);
-            return location.getLatitude();
-
-        } catch (Exception e) {
-            Toast.makeText(getBaseContext(), "Error occured finding latitude and latitude for " + findAddress, Toast.LENGTH_SHORT).show();
-            return 0;
-        }
-    }
-
-    public double getLongitudeFromAddress(String findAddress) {
-
-        Geocoder coder = new Geocoder(this);
-        List<Address> address;
-
-        try {
-            address = coder.getFromLocationName(findAddress, 5);
-            if (address == null) {
-                return 0;
-            }
-            Address location = address.get(0);
-            return location.getLongitude();
-
-        } catch (Exception e) {
-            Toast.makeText(getBaseContext(), "Error occured finding latitude and longitude for " + findAddress, Toast.LENGTH_SHORT).show();
-            return 0;
-        }
     }
 }
