@@ -146,7 +146,7 @@ public class BusStation extends AppCompatActivity {
 
 
     }
-    
+
     void PopulateStations(){
 
         Call<List<Station>> call = WebService.apiService.getStationList();

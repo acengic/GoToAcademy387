@@ -1,9 +1,45 @@
 package ba.tba.class1;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class Arrival {
+public class Arrival implements Parcelable{
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<Arrival> CREATOR = new Parcelable.Creator<Arrival>() {
+        public Arrival createFromParcel(Parcel in) {
+            return new Arrival(in);
+        }
+
+        public Arrival[] newArray(int size) {
+            return new Arrival[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(line_name);
+        dest.writeString( operator_name);
+        dest.writeDouble(eta);
+        dest.writeString( price);
+        dest.writeString( arrival);
+        dest.writeString(referentTime);
+    }
+
+    public Arrival(Parcel dest) {
+        line_name = dest.readString();
+        operator_name = dest.readString();
+        eta = dest.readDouble();
+        price = dest.readString();
+        arrival = dest.readString();
+        referentTime = dest.readString();
+    }
 
     private String line_name;
     private String operator_name;

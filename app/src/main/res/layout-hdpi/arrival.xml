@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="95dp"
-    android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal">
 
     <TextView
@@ -30,7 +29,7 @@
         android:textSize="25dp" />
 
     <ImageButton
-        android:id="@+id/viewDetails"
+        android:id="@+id/setAlarm"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -39,7 +38,7 @@
         android:src="@drawable/add_vehicle_alarm" />
 
     <ImageButton
-        android:id="@+id/setAlarm"
+        android:id="@+id/viewDetails"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

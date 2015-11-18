@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Parcelable;
 import android.provider.AlarmClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -56,11 +58,12 @@ public class ArrivalListActivity extends AppCompatActivity {
         toStation = getIntent().getStringExtra(Constants.end);
         time = getIntent().getStringExtra(Constants.time);
 
+        this.setTitle(fromStation + '-' + toStation );
         //ArrayList<Arrival> arrivalsList = new ArrayList<>();
 
         lv = (ListView) findViewById(R.id.arrivalsListView);
         pd = ProgressDialog.show(this, "Loading", "Wait while we get arrivals...");
-        PopulateArrivalsListFromWeb();
+        if (savedInstanceState == null) PopulateArrivalsListFromWeb();
         //PopulateArrivalsList(arrivalsList);
 
 
@@ -85,6 +88,14 @@ public class ArrivalListActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        ArrivalAdapter aa = (ArrivalAdapter) lv.getAdapter();
+        Arrival[] array = aa.getCollection().toArray(new Arrival[aa.getCollection().size()]);
+
+        outState.putParcelableArray("arrivalsList", array);
     }
 
     void SetAlarm(int hour, int minute, String description){

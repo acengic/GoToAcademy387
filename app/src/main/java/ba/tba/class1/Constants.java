@@ -14,5 +14,7 @@ public class Constants {
     static final String surname = "surname";
     static final String address = "address";
     static final String city = "city";
+    static final String vehicle = "vehicle";
+
     static final String radioLanguage = "radioLanguage";
 }
