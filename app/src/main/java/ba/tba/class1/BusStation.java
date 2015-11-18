@@ -26,6 +26,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -293,4 +294,8 @@ public class BusStation extends AppCompatActivity {
             Log.d("Location", "Latitude " + location.getLatitude() + "; Longitude: " + location.getLongitude());
         }
     }
+
+    public void chooseTransportMode (View v)
+        Get
+
 }

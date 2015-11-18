@@ -72,4 +72,43 @@
     <string name="title_activity_settings_application_about">About</string>
     <string name="title_activity_settings_personal_details">Personal details</string>
     <string name="title_activity_vehicle_details">VehicleDetails</string>
+
+    //for transport lines and transport modes
+    <string name="TransportList">Transport</string>
+
+    <string-array name="bus">
+        <item>101</item>
+        <item>102</item>
+        <item>103</item>
+        <item>104</item>
+        <item>107</item>
+        <item>108</item>
+    </string-array>
+
+    <string-array name="minibus">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="taxi">
+        <item>Sarajevo</item>
+        <item>Kajle</item>
+        <item>Crveni</item>
+    </string-array>
+
+    <string-array name="tram">
+        <item>1 Željeznička Stanica – Baščaršija</item>
+        <item>2 Čengić Vila – Baščaršija</item>
+        <item>3 Ilidža – Baščaršija</item>
+        <item>4 Ilidža – Željeznička stanica</item>
+        <item>5 Nedžarići – Baščaršija</item>
+        <item>6 Ilidža – Skenderija</item>
+    </string-array>
+
+    <string-array name="trolleybus">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>
